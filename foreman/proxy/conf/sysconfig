@@ -1,0 +1,12 @@
+{%- from "foreman/proxy/map.jinja" import proxy with context -%}
+
+{%- from "foreman/proxy/map.jinja" import settings with context -%}
+
+# the location where foreman proxy is installed
+FOREMAN_PROXY_HOME={{ settings.home }}
+
+# the user which runs the web interface
+FOREMAN_PROXY_USER={{ settings.user }}
+
+# location of the proxy config file
+FOREMAN_PROXY_SETTINGS={{ proxy.config }}

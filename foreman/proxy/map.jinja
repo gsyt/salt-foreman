@@ -1,0 +1,43 @@
+{% set proxy  = salt['grains.filter_by']( {
+  'RedHat': {
+    'package': 'foreman-proxy',
+    'service': 'foreman-proxy',
+    'config': '/etc/foreman-proxy/settings.yml',
+    'sysconfig': '/etc/sysconfig/foreman-proxy',
+  },
+  'Debian': {
+    'package': 'foreman-proxy',
+    'service': 'foreman-proxy',
+    'config': '/etc/foreman-proxy/settings.yml',
+    'sysconfig': '/etc/sysconfig/foreman-proxy',
+  },
+}, merge=salt['pillar.get']('foreman:proxy:lookup')) %}
+
+{% set settings = salt['grains.filter_by']( {
+  'RedHat': {
+    'user': 'root',
+    'dir': '/etc/foreman-proxy/settings.d',
+    'home': '/usr/share/foreman-proxy',
+    'daemon': True,
+    'pid': '/var/run/foreman-proxy/foreman-proxy.pid',
+    'port': '8443',
+    'sslca': '/var/lib/puppet/ssl/certs/ca.pem',
+    'sslcert': '/var/lib/puppet/ssl/certs/adm01.cur.gsyt.ag.pem',
+    'sslkey': '/var/lib/puppet/ssl/private_keys/adm01.cur.gsyt.ag.pem',
+    'logfile': '/var/log/foreman-proxy/proxy.log',
+    'loglevel': 'DEBUG',
+  },
+  'Debian': {
+    'user': 'root',
+    'dir': '/etc/foreman-proxy/settings.d',
+    'home': '/usr/share/foreman-proxy',
+    'daemon': True,
+    'pid': '/var/run/foreman-proxy/foreman-proxy.pid',
+    'port': '8443',
+    'sslca': '/var/lib/puppet/ssl/certs/ca.pem',
+    'sslcert': '/var/lib/puppet/ssl/certs/adm01.cur.gsyt.ag.pem',
+    'sslkey': '/var/lib/puppet/ssl/private_keys/adm01.cur.gsyt.ag.pem',
+    'logfile': '/var/log/foreman-proxy/proxy.log',
+    'loglevel': 'DEBUG',
+  },
+}, merge=salt['pillar.get']('foreman:proxy:lookup:settings')) %}

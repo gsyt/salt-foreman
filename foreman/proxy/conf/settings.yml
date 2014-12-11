@@ -1,11 +1,24 @@
-{% from "foreman/proxy/map.jinja" import settings with context %}
-
+{%- from "foreman/proxy/map.jinja" import settings with context -%}
+---
 :settings_directory: {{ settings.dir }}
-:ssl_ca_file: {{ settings.sslca }}
+  {%- if settings.daemon %}
 :daemon: {{ settings.daemon }}
-:ssl_certificate: {{ settings.sslcert }}
+  {%- endif %}
+  {%- if settings.pid %}
 :daemon_pid: {{ settings.pid }}
+  {%- endif %}
+  {%- if settings.sslca and settings.sslcert and settings.sslkey %}
+:ssl_ca_file: {{ settings.sslca }}
+:ssl_certificate: {{ settings.sslcert }}
 :ssl_private_key: {{ settings.sslkey }}
+  {%- endif %}
+  {%- if settings.port %}
 :https_port: {{ settings.port }}
+  {%- endif %}
+  {%- if settings.logfile %}
 :log_file: {{ settings.logfile }}
+  {%- endif %}
+  {%- if settings.loglevel %}
 :log_level: {{ settings.loglevel }}
+  {%- endif %}
+:virsh_network: default

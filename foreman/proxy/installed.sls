@@ -15,6 +15,7 @@
 
 {% set config = {
   'manage': salt['pillar.get']('foreman:proxy:config:manage', False), 
+  'file': proxy.config,
   'contents': salt['pillar.get']('foreman:proxy:config:contents', ''),
   'source': salt['pillar.get']('foreman:proxy:config:source', 'salt://foreman/proxy/conf/settings.yml'),
 } %}
@@ -58,6 +59,7 @@ foreman.proxy.service:
     - file: foreman.proxy.sysconfig
     - file: foreman.proxy.config
     - pkg: foreman.proxy.pkg
+    - file: foreman.proxy.dhcp
   {% else %}
   watch:
     - pkg: foreman.proxy.pkg

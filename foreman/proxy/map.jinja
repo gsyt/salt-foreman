@@ -10,8 +10,7 @@
     'service': 'foreman-proxy',
     'config': '/etc/foreman-proxy/settings.yml',
     'sysconfig': '/etc/sysconfig/foreman-proxy',
-  },
-}, merge=salt['pillar.get']('foreman:proxy:lookup')) %}
+  }, }, merge=salt['pillar.get']('foreman:lookup:proxy')) %}
 
 {% set settings = salt['grains.filter_by']( {
   'RedHat': {
@@ -22,8 +21,8 @@
     'pid': '/var/run/foreman-proxy/foreman-proxy.pid',
     'port': '8443',
     'sslca': '/var/lib/puppet/ssl/certs/ca.pem',
-    'sslcert': '/var/lib/puppet/ssl/certs/adm01.cur.gsyt.ag.pem',
-    'sslkey': '/var/lib/puppet/ssl/private_keys/adm01.cur.gsyt.ag.pem',
+    'sslcert': '/var/lib/puppet/ssl/certs/' ~ salt['grains.get']('fqdn'),
+    'sslkey': '/var/lib/puppet/ssl/private_keys/' ~ salt['grains.get']('fqdn'),
     'logfile': '/var/log/foreman-proxy/proxy.log',
     'loglevel': 'DEBUG',
   },
@@ -35,9 +34,8 @@
     'pid': '/var/run/foreman-proxy/foreman-proxy.pid',
     'port': '8443',
     'sslca': '/var/lib/puppet/ssl/certs/ca.pem',
-    'sslcert': '/var/lib/puppet/ssl/certs/adm01.cur.gsyt.ag.pem',
-    'sslkey': '/var/lib/puppet/ssl/private_keys/adm01.cur.gsyt.ag.pem',
-    'logfile': '/var/log/foreman-proxy/proxy.log',
+    'sslcert': '/var/lib/puppet/ssl/certs/' ~ salt['grains.get']('fqdn'),
+    'sslkey': '/var/lib/puppet/ssl/private_keys/' ~ salt['grains.get']('fqdn'),
     'loglevel': 'DEBUG',
   },
-}, merge=salt['pillar.get']('foreman:proxy:lookup:settings')) %}
+}, merge=salt['pillar.get']('foreman:lookup:proxy:settings')) %}
